@@ -21,12 +21,15 @@ public class MainActivity extends AppCompatActivity {
     //id list
     private final int[] id_list = new int[]{R.id.image_button, R.id.video_button, R.id.exit_button};
     private Intent intent = getIntent();
+    //width
+    private int t_width = 0;
+    //访问页面次数
+    private int num = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        onClick();
     }
 
 
@@ -63,18 +66,55 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        by_button_width_height();
+        onClick();
+        by_button_width_height();
+        onHover();
 
-        
+        button = findViewById(R.id.video_button);
+        button.getLayoutParams().height = t_width + 100;
+        button.getLayoutParams().width = t_width + 100;
+    }
 
-
-
+    //hover
+    private void onHover() {
+//        button = findViewById(R.id.video_button);
+        for (int j : id_list) {
+            button = findViewById(j);
+            button.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (num == 0) {
+                        t_width = findViewById(view.getId()).getWidth() - 100;
+                        num++;
+                        // - - - -
+                    } else if (num == 1) {
+                        button = findViewById(R.id.exit_button);
+                        button.getLayoutParams().height = t_width;
+                        button.getLayoutParams().width = t_width;
+                        button = findViewById(R.id.video_button);
+                        button.getLayoutParams().height = t_width;
+                        button.getLayoutParams().width = t_width;
+                        num++;
+                    } else {
+                        button = findViewById(view.getId());
+                        System.out.println(view.getId());
+                        if (b) {
+                            button.getLayoutParams().height = t_width + 100;
+                            button.getLayoutParams().width = t_width + 100;
+                        } else {
+                            button.getLayoutParams().height = t_width;
+                            button.getLayoutParams().width = t_width;
+                        }
+                        button.setLayoutParams(button.getLayoutParams());
+                    }
+                }
+            });
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     //width_height
@@ -102,4 +142,7 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("image");
         }
     }
+
+    //hover
+
 }
