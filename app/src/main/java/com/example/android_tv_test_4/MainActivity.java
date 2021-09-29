@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
         onHover();
 
         button = findViewById(R.id.video_button);
-        button.getLayoutParams().height = t_width + 100;
-        button.getLayoutParams().width = t_width + 100;
+        button.getLayoutParams().height = t_width + 50;
+        button.getLayoutParams().width = t_width + 50;
     }
 
     //hover
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onFocusChange(View view, boolean b) {
                     if (num == 0) {
-                        t_width = findViewById(view.getId()).getWidth() - 100;
+                        t_width = findViewById(view.getId()).getWidth() - 50;
                         num++;
                         // - - - -
                     } else if (num == 1) {
@@ -99,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
                         button = findViewById(view.getId());
                         System.out.println(view.getId());
                         if (b) {
-                            button.getLayoutParams().height = t_width + 100;
-                            button.getLayoutParams().width = t_width + 100;
+                            button.getLayoutParams().height = t_width + 50;
+                            button.getLayoutParams().width = t_width + 50;
                         } else {
                             button.getLayoutParams().height = t_width;
                             button.getLayoutParams().width = t_width;

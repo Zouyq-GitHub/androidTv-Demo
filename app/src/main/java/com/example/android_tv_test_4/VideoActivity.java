@@ -1,5 +1,7 @@
+//// - - - - - -
 //package com.example.android_tv_test_4;
 //
+//import androidx.annotation.NonNull;
 //import androidx.appcompat.app.AppCompatActivity;
 //
 //import android.app.Activity;
@@ -7,6 +9,7 @@
 //import android.net.Uri;
 //import android.os.Bundle;
 //import android.os.Handler;
+//import android.os.Message;
 //import android.util.Log;
 //import android.view.KeyEvent;
 //import android.view.View;
@@ -43,8 +46,15 @@
 //    @BindView(R.id.btn_restart_play)
 //    ImageButton btnRestartPlay;
 //
+//    //video_name_array
+//    private final String video_name_array[] = {"test", "test2", "test3"};
+//    private int i = 0;
+//    //RelativeLayout
+//    private RelativeLayout relativeLayout;
+//    //boolean progress
+//    private boolean progress = false;
 //
-//    private int key = 0;
+//
 //    private Handler handler = new Handler();
 //    private Runnable runnable = new Runnable() {
 //        public void run() {
@@ -65,12 +75,15 @@
 //
 //        timeSeekBar.setOnSeekBarChangeListener(onSeekBarChangeListener);
 //        initVideo();
+//        //播放完毕回调
 //        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 //            @Override
 //            public void onCompletion(MediaPlayer mp) {
-//                key = 1;
-//                btnRestartPlay.setVisibility(View.VISIBLE);
-//                layFinishBg.setVisibility(View.VISIBLE);
+//                //播放下一组视频
+//                initVideo();
+//                //进度条清空
+//                btnRestartPlay.setVisibility(View.GONE);
+//                layFinishBg.setVisibility(View.GONE);
 //            }
 //        });
 //
@@ -82,6 +95,10 @@
 //                return false;
 //            }
 //        });
+//
+//        //进度条消失
+//        relativeLayout = findViewById(R.id.progress_bar);
+//        relativeLayout.setVisibility(View.INVISIBLE);
 //    }
 //
 //
@@ -103,8 +120,12 @@
 //     */
 //    private void initVideo() {
 //        //本地视频
-//        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/videos/test"));
-//
+//        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/raw/" + video_name_array[i]));
+//        if (i < video_name_array.length - 1) {
+//            i = i + 1;
+//        } else {
+//            i = 0;
+//        }
 //        //网络视频 2
 ////        final Uri uri = Uri.parse("http://gslb.miaopai.com/stream/ed5HCfnhovu3tyIQAiv60Q__.mp4");
 ////        videoView.setVideoURI(uri);
@@ -130,31 +151,20 @@
 //     * 控制视频是  播放还是暂停  或者是重播
 //     *
 //     * @param isPlay
-//     * @param keys
 //     */
-//    private void isVideoPlay(boolean isPlay, int keys) {
-//        switch (keys) {
-//            case 0:
-//                if (isPlay) {//暂停
-//                    btnPlayOrPause.setBackground(getResources().getDrawable(R.mipmap.icon_player));
-//                    btnPlayOrPause.setVisibility(View.VISIBLE);
-//                    videoView.pause();
-//                } else {//继续播放
-//                    btnPlayOrPause.setBackground(getResources().getDrawable(R.mipmap.icon_pause));
-//                    btnPlayOrPause.setVisibility(View.VISIBLE);
-//                    // 开始线程，更新进度条的刻度
-//                    handler.postDelayed(runnable, 0);
-//                    videoView.start();
-//                    timeSeekBar.setMax(videoView.getDuration());
-//                    timeGone();
-//                }
-//                break;
-//            case 1://重新播放
-//                initVideo();
-//                btnRestartPlay.setVisibility(View.GONE);
-//                layFinishBg.setVisibility(View.GONE);
-//                key = 0;
-//                break;
+//    private void isVideoPlay(boolean isPlay) {
+//        if (isPlay) {//暂停
+//            btnPlayOrPause.setBackground(getResources().getDrawable(R.mipmap.icon_player));
+//            btnPlayOrPause.setVisibility(View.VISIBLE);
+//            videoView.pause();
+//        } else {//继续播放
+//            btnPlayOrPause.setBackground(getResources().getDrawable(R.mipmap.icon_pause));
+//            btnPlayOrPause.setVisibility(View.VISIBLE);
+//            // 开始线程，更新进度条的刻度
+//            handler.postDelayed(runnable, 0);
+//            videoView.start();
+//            timeSeekBar.setMax(videoView.getDuration());
+//            timeGone();
 //        }
 //
 //    }
@@ -221,6 +231,20 @@
 //
 //    private String TAG = "key";
 //
+//    Handler TimerHandler = new Handler();
+//
+//    Runnable myTimerRun = new Runnable() {
+//        @Override
+//        public void run() {
+//            TimerHandler.postDelayed(this, 2000);
+//            //VISIBLE
+//            relativeLayout.setVisibility(View.GONE);
+//            System.out.println("115415441");
+//            TimerHandler.removeCallbacks(myTimerRun);
+//        }
+//    };
+//
+//
 //    /**
 //     * 遥控器按键监听
 //     *
@@ -232,12 +256,16 @@
 //    public boolean onKeyDown(int keyCode, KeyEvent event) {
 //
 //        switch (keyCode) {
-//
 //            case KeyEvent.KEYCODE_ENTER:     //确定键enter
 //            case KeyEvent.KEYCODE_DPAD_CENTER:
 //                Log.d(TAG, "enter--->");
 //                //如果是播放中则暂停、如果是暂停则继续播放
-//                isVideoPlay(videoView.isPlaying(), key);
+//                isVideoPlay(videoView.isPlaying());
+//
+//                //VISIBLE
+//                TimerHandler.removeCallbacks(myTimerRun);
+//                relativeLayout.setVisibility(View.VISIBLE);
+//                TimerHandler.postDelayed(myTimerRun, 4000);
 //                break;
 //
 //            case KeyEvent.KEYCODE_BACK:    //返回键
@@ -257,7 +285,6 @@
 //                 *    exp:KeyEvent.ACTION_UP
 //                 */
 //                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-//
 //                    Log.d(TAG, "down--->");
 //                }
 //
@@ -273,11 +300,21 @@
 //                if (videoView.getCurrentPosition() > 4) {
 //                    videoView.seekTo(videoView.getCurrentPosition() - 5 * 1000);
 //                }
+//
+//                //VISIBLE
+//                TimerHandler.removeCallbacks(myTimerRun);
+//                relativeLayout.setVisibility(View.VISIBLE);
+//                TimerHandler.postDelayed(myTimerRun, 4000);
 //                break;
 //
 //            case KeyEvent.KEYCODE_DPAD_RIGHT:  //向右键
 //                Log.d(TAG, "right--->");
 //                videoView.seekTo(videoView.getCurrentPosition() + 5 * 1000);
+//
+//                //VISIBLE
+//                TimerHandler.removeCallbacks(myTimerRun);
+//                relativeLayout.setVisibility(View.VISIBLE);
+//                TimerHandler.postDelayed(myTimerRun, 4000);
 //                break;
 //
 //            case KeyEvent.KEYCODE_VOLUME_UP:   //调大声音键
@@ -299,8 +336,11 @@
 //
 //    }
 //}
+//
+//
+//
 
-
+// - - -
 // - - - - - -
 package com.example.android_tv_test_4;
 
@@ -308,9 +348,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -327,6 +369,7 @@ import java.util.Calendar;
 import java.util.Formatter;
 import java.util.Locale;
 
+import com.example.android_tv_test_4.util.PermissionUtils;
 import com.example.android_tv_test_4.view.MyVideoView;
 
 import butterknife.BindView;
@@ -350,7 +393,7 @@ public class VideoActivity extends Activity {
     ImageButton btnRestartPlay;
 
     //video_name_array
-    private final String video_name_array[] = {"test", "test2", "test3"};
+    private final String video_name_array[] = {"test.mp4", "test2.mp4", "test3.mp4"};
     private int i = 0;
     //RelativeLayout
     private RelativeLayout relativeLayout;
@@ -369,6 +412,27 @@ public class VideoActivity extends Activity {
             handler.postDelayed(runnable, 500);
         }
     };
+    //权限方法重写
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    initVideo();
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("权限调用失败");
+                        }
+                    });
+                }
+                break;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -376,8 +440,14 @@ public class VideoActivity extends Activity {
         setContentView(R.layout.activity_video);
         ButterKnife.bind(this);
 
+        //权限调用
+        if (PermissionUtils.isGrantExternalRW(VideoActivity.this, 1)) {
+            initVideo();
+        }
+
+
         timeSeekBar.setOnSeekBarChangeListener(onSeekBarChangeListener);
-        initVideo();
+//        initVideo();
         //播放完毕回调
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -423,15 +493,20 @@ public class VideoActivity extends Activity {
      */
     private void initVideo() {
         //本地视频
-        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/raw/" + video_name_array[i]));
+//        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/raw/" + video_name_array[i]));
+        videoView.setVideoURI(Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/videos/" + video_name_array[i]));
+        System.out.println(Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/videos/" + video_name_array[i]);
         if (i < video_name_array.length - 1) {
             i = i + 1;
         } else {
             i = 0;
         }
-        //网络视频 2
-//        final Uri uri = Uri.parse("http://gslb.miaopai.com/stream/ed5HCfnhovu3tyIQAiv60Q__.mp4");
-//        videoView.setVideoURI(uri);
+        //获取路径
+//        System.out.println("获取外部存储根路径" + Environment.getExternalStorageDirectory().getAbsolutePath());
+//        System.out.println("获取外部存储根路径" + Environment.getExternalStoragePublicDirectory("").getAbsolutePath());
+//        System.out.println("这个方法是获取某个应用在外部存储中的files路径 " + getExternalFilesDir("").getAbsolutePath());
+//        System.out.println("这个方法是获取某个应用在外部存储中的cache路径 " + getExternalCacheDir().getAbsolutePath());
+
         videoView.requestFocus();
 
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {

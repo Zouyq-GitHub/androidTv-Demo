@@ -5,6 +5,7 @@
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#DBEEF4"
         android:orientation="horizontal"
         tools:context=".MainActivity"
         tools:deviceIds="tv"
@@ -18,39 +19,63 @@
     <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="8"
-            android:gravity="center"
+            android:layout_weight="1.5">
 
-            android:orientation="horizontal">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <Button
+            <!--            <LinearLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content">-->
 
-                android:id="@+id/video_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
-                android:layout_weight="1"
-                android:text="视频"
-                android:background="@drawable/button_hover"
-                />
+            <!--                <ImageView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:src="@drawable/background" />-->
+            <!--            </LinearLayout>-->
 
-        <Button
-                android:id="@+id/image_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
-                android:layout_weight="1"
-                android:background="@drawable/button_hover"
-                android:text="图片" />
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="80dp">
 
-        <Button
-                android:id="@+id/exit_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
-                android:layout_weight="1"
-                android:background="@drawable/button_hover"
-                android:text="退出" />
+                <Button
+                        android:id="@+id/video_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="80dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/video" />
+
+<!--                <LinearLayout-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="0.8" />-->
+
+                <Button
+                        android:id="@+id/image_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="80dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/images" />
+
+<!--                <LinearLayout-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="0.8" />-->
+
+                <Button
+                        android:id="@+id/exit_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/exit" />
+            </LinearLayout>
+
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
