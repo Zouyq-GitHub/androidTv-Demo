@@ -4,13 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-
-import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 
 /*
  * Main Activity class that loads {@link MainFragment}.
@@ -72,11 +68,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         onClick();
-//        by_button_width_height();
-//        onHover();
-//        button = findViewById(R.id.video_button);
-//        button.getLayoutParams().height = t_width + 50;
-//        button.getLayoutParams().width = t_width + 50;
     }
 
     //hover
@@ -142,14 +133,14 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1) {
-            System.out.println("video");
+            ResultVideo();
         } else {
-            Result();
+            ResultImg();
         }
     }
 
     //Result
-    private void Result() {
+    private void ResultImg() {
         //width
         button = findViewById(R.id.video_button);
         button.getLayoutParams().height = t_width;
@@ -158,6 +149,21 @@ public class MainActivity extends AppCompatActivity {
         button = findViewById(R.id.image_button);
         button.getLayoutParams().height = t_width + 50;
         button.getLayoutParams().width = t_width + 50;
+        button.setLayoutParams(button.getLayoutParams());
+        button = findViewById(R.id.exit_button);
+        button.getLayoutParams().height = t_width;
+        button.getLayoutParams().width = t_width;
+    }
+
+    private void ResultVideo() {
+        //width
+        button = findViewById(R.id.video_button);
+        button.getLayoutParams().height = t_width + 50;
+        button.getLayoutParams().width = t_width + 50;
+        button.setLayoutParams(button.getLayoutParams());
+        button = findViewById(R.id.image_button);
+        button.getLayoutParams().height = t_width;
+        button.getLayoutParams().width = t_width;
         button.setLayoutParams(button.getLayoutParams());
         button = findViewById(R.id.exit_button);
         button.getLayoutParams().height = t_width;
