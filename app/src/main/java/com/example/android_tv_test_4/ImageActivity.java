@@ -216,6 +216,7 @@ public class ImageActivity extends Activity {
                 break;
             case KeyEvent.KEYCODE_BACK:    //返回键
                 //clear
+                TimerHandler.removeCallbacks(myTimerRun);
                 break;
             case KeyEvent.KEYCODE_DPAD_LEFT: //向左键
                 //stop_switch
