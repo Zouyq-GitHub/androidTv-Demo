@@ -149,8 +149,8 @@ public class ImageActivity extends Activity {
     private ImageView imageView;
     private int image_name_array[] = {R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5, R.drawable.a6, R.drawable.a7};
     private int i = 0;
-    //switch_image_num
-    private int num = 0;
+    //first_switch
+    private int first_switch = 0;
     //switch_pic
     private boolean switch_pic = true;
     Handler TimerHandler = new Handler();
@@ -179,12 +179,16 @@ public class ImageActivity extends Activity {
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (msg.what == 0) {
-                Log.e("photo", "true");
-                imageView.setImageResource(image_name_array[i]);
-                if (i < image_name_array.length - 1) {
-                    i++;
+                if (first_switch != 0) {
+                    Log.e("photo", "true");
+                    if (i < image_name_array.length - 1) {
+                        i++;
+                    } else {
+                        i = 0;
+                    }
+                    imageView.setImageResource(image_name_array[i]);
                 } else {
-                    i = 0;
+                    first_switch++;
                 }
             }
         }
@@ -207,21 +211,15 @@ public class ImageActivity extends Activity {
                     switch_pic = false;
                 } else {
                     switch_pic = true;
-                    TimerHandler.postDelayed(myTimerRun, 0);
+                    TimerHandler.postDelayed(myTimerRun, 3000);
                 }
                 break;
             case KeyEvent.KEYCODE_BACK:    //返回键
                 //clear
                 break;
             case KeyEvent.KEYCODE_DPAD_LEFT: //向左键
-                if (switch_pic) {
-                    //stop
-                    i = i - 1;
-                    //stop-switch
-                    TimerHandler.removeCallbacks(myTimerRun);
-                    switch_pic = false;
-                    num++;
-                }
+                //stop_switch
+                TimerHandler.removeCallbacks(myTimerRun);
                 //switch_pic
                 if (i <= image_name_array.length - 1 && i != 0) {
                     i--;
@@ -231,24 +229,24 @@ public class ImageActivity extends Activity {
                     imageView.setImageResource(image_name_array[i]);
                 }
                 System.out.println("i:  " + i);
+                TimerHandler.postDelayed(myTimerRun, 3000);
                 break;
             case KeyEvent.KEYCODE_DPAD_RIGHT:  //向右键
-                if (switch_pic) {
-                    //stop
-                    switch_pic = false;
-                    //stop-switch
-                    TimerHandler.removeCallbacks(myTimerRun);
-                    i--;
-                }
+                //stop_switch
+                TimerHandler.removeCallbacks(myTimerRun);
                 //switch_pic
-                if (i <= image_name_array.length - 1 && i != image_name_array.length - 1) {
+                if (i < image_name_array.length - 1) {
                     i++;
                     imageView.setImageResource(image_name_array[i]);
                 } else if (i == image_name_array.length - 1) {
                     i = 0;
                     imageView.setImageResource(image_name_array[i]);
+                } else {
+                    i = 0;
+                    imageView.setImageResource(image_name_array[i]);
                 }
                 System.out.println("i:  " + i);
+                TimerHandler.postDelayed(myTimerRun, 3000);
                 break;
         }
         return super.onKeyDown(keyCode, event);

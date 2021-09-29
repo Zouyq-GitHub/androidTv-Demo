@@ -304,6 +304,7 @@
 // - - - - - -
 package com.example.android_tv_test_4;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -311,6 +312,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -350,6 +352,11 @@ public class VideoActivity extends Activity {
     //video_name_array
     private final String video_name_array[] = {"test", "test2", "test3"};
     private int i = 0;
+    //RelativeLayout
+    private RelativeLayout relativeLayout;
+    //boolean progress
+    private boolean progress = false;
+
 
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
@@ -391,6 +398,10 @@ public class VideoActivity extends Activity {
                 return false;
             }
         });
+
+        //进度条消失
+        relativeLayout = findViewById(R.id.progress_bar);
+        relativeLayout.setVisibility(View.INVISIBLE);
     }
 
 
@@ -523,6 +534,20 @@ public class VideoActivity extends Activity {
 
     private String TAG = "key";
 
+    Handler TimerHandler = new Handler();
+
+    Runnable myTimerRun = new Runnable() {
+        @Override
+        public void run() {
+            TimerHandler.postDelayed(this, 2000);
+            //VISIBLE
+            relativeLayout.setVisibility(View.GONE);
+            System.out.println("115415441");
+            TimerHandler.removeCallbacks(myTimerRun);
+        }
+    };
+
+
     /**
      * 遥控器按键监听
      *
@@ -539,6 +564,11 @@ public class VideoActivity extends Activity {
                 Log.d(TAG, "enter--->");
                 //如果是播放中则暂停、如果是暂停则继续播放
                 isVideoPlay(videoView.isPlaying());
+
+                //VISIBLE
+                TimerHandler.removeCallbacks(myTimerRun);
+                relativeLayout.setVisibility(View.VISIBLE);
+                TimerHandler.postDelayed(myTimerRun, 4000);
                 break;
 
             case KeyEvent.KEYCODE_BACK:    //返回键
@@ -558,7 +588,6 @@ public class VideoActivity extends Activity {
                  *    exp:KeyEvent.ACTION_UP
                  */
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
-
                     Log.d(TAG, "down--->");
                 }
 
@@ -574,11 +603,21 @@ public class VideoActivity extends Activity {
                 if (videoView.getCurrentPosition() > 4) {
                     videoView.seekTo(videoView.getCurrentPosition() - 5 * 1000);
                 }
+
+                //VISIBLE
+                TimerHandler.removeCallbacks(myTimerRun);
+                relativeLayout.setVisibility(View.VISIBLE);
+                TimerHandler.postDelayed(myTimerRun, 4000);
                 break;
 
             case KeyEvent.KEYCODE_DPAD_RIGHT:  //向右键
                 Log.d(TAG, "right--->");
                 videoView.seekTo(videoView.getCurrentPosition() + 5 * 1000);
+
+                //VISIBLE
+                TimerHandler.removeCallbacks(myTimerRun);
+                relativeLayout.setVisibility(View.VISIBLE);
+                TimerHandler.postDelayed(myTimerRun, 4000);
                 break;
 
             case KeyEvent.KEYCODE_VOLUME_UP:   //调大声音键
