@@ -509,10 +509,10 @@ public class ImageActivity extends Activity {
                 //switch_pic
                 if (i <= image_name_array.length - 1 && i != 0) {
                     i--;
-                    imageView.setImageResource(image_name_array[i]);
+                    imageView.setImageURI(Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/images/" + image_name_array[i] + ".png"));
                 } else if (i == 0) {
                     i = image_name_array.length - 1;
-                    imageView.setImageResource(image_name_array[i]);
+                    imageView.setImageURI(Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/images/" + image_name_array[i] + ".png"));
                 }
                 System.out.println("i:  " + i);
                 TimerHandler.postDelayed(myTimerRun, 3000);
@@ -523,13 +523,13 @@ public class ImageActivity extends Activity {
                 //switch_pic
                 if (i < image_name_array.length - 1) {
                     i++;
-                    imageView.setImageResource(image_name_array[i]);
+                    imageView.setImageURI(Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/images/" + image_name_array[i] + ".png"));
                 } else if (i == image_name_array.length - 1) {
                     i = 0;
-                    imageView.setImageResource(image_name_array[i]);
+                    imageView.setImageURI(Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/images/" + image_name_array[i] + ".png"));
                 } else {
                     i = 0;
-                    imageView.setImageResource(image_name_array[i]);
+                    imageView.setImageURI(Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/images/" + image_name_array[i] + ".png"));
                 }
                 System.out.println("i:  " + i);
                 TimerHandler.postDelayed(myTimerRun, 3000);
