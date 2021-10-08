@@ -509,6 +509,7 @@
 package com.example.android_tv_test_4;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -521,6 +522,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.example.android_tv_test_4.util.PermissionUtils;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -538,12 +542,34 @@ public class MainActivity extends AppCompatActivity {
     //切换按钮次数
     private int num = 0;
 
+    //权限方法重写
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    newIcon();
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("权限调用失败");
+                        }
+                    });
+                }
+                break;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //图标-背景图片的更新
-        newIcon();
+        //权限调用
+        if (PermissionUtils.isGrantExternalRW(MainActivity.this, 1)) {
+            newIcon();
+        }
         //焦点获取
         onHover();
 

@@ -453,8 +453,6 @@ public class VideoActivity extends Activity {
         }
     };
     //权限方法重写
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -552,21 +550,6 @@ public class VideoActivity extends Activity {
         c.setTimeInMillis(millionSeconds);
         return simpleDateFormat.format(c.getTime());
     }
-
-    //test
-//    public static List<String> getFilesAllName(String path) {
-//        File file = new File(path);
-//        File[] files = file.listFiles();
-//        if (files == null) {
-//            Log.e("error", "空目录");
-//            return null;
-//        }
-//        List<String> s = new ArrayList<>();
-//        for (int i = 0; i < files.length; i++) {
-//            s.add(files[i].getAbsolutePath());
-//        }
-//        return s;
-//    }
 
     /**
      * 初始化VideoView
