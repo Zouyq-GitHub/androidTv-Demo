@@ -524,6 +524,8 @@ import android.widget.LinearLayout;
 
 import com.example.android_tv_test_4.util.PermissionUtils;
 
+import java.io.File;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -571,8 +573,23 @@ public class MainActivity extends AppCompatActivity {
             newIcon();
         }
         //焦点获取
-        onHover();
-
+//        onHover();
+        //读取目录查看文件
+        //创建File对象 路径
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/html");
+        //获取该目录下的所有文件
+        String[] files = file.list();
+        button = findViewById(R.id.html_button);
+        //
+//        button.setVisibility(View.GONE);
+        //长度定义
+        if (files.length != 0) {
+            //有文件显示图标
+            button.setVisibility(View.VISIBLE);
+        } else {
+            //隐藏图标
+            button.setVisibility(View.GONE);
+        }
     }
 
     //图标和背景图
@@ -620,6 +637,11 @@ public class MainActivity extends AppCompatActivity {
 //                            finish();
                             System.exit(0);
                             break;
+                        case R.id.html_button:
+                            intent = new Intent(MainActivity.this, HtmlActivity.class);
+                            //跳转
+                            startActivityForResult(intent, 3);
+                            break;
                         default:
                             System.out.println("none");
                             break;
@@ -643,17 +665,18 @@ public class MainActivity extends AppCompatActivity {
             button.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View view, boolean b) {
+                    System.out.println(t_width);
                     //全体初始化
                     for (int j = 0; j < id_list.length; j++) {
                         button = findViewById(id_list[j]);
-                        button.getLayoutParams().height = 100;
-                        button.getLayoutParams().width = 100;
+                        button.getLayoutParams().height = t_width;
+                        button.getLayoutParams().width = t_width;
                         button.setLayoutParams(button.getLayoutParams());
                     }
                     if (b) {
                         button = findViewById(view.getId());
-                        button.getLayoutParams().height = 150;
-                        button.getLayoutParams().width = 150;
+                        button.getLayoutParams().height = t_width + 50;
+                        button.getLayoutParams().width = t_width + 50;
                         button.setLayoutParams(button.getLayoutParams());
                     }
                 }
@@ -662,24 +685,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        //赋值
+        t_width = findViewById(R.id.video_button).getWidth();
+        //重新改变大小
+        //全体初始化
+        for (int j = 0; j < id_list.length; j++) {
+            button = findViewById(id_list[j]);
+            button.getLayoutParams().height = t_width;
+            button.getLayoutParams().width = t_width;
+            button.setLayoutParams(button.getLayoutParams());
+        }
+        button = findViewById(R.id.video_button);
+        button.getLayoutParams().height = t_width + 50;
+        button.getLayoutParams().width = t_width + 50;
+        button.setLayoutParams(button.getLayoutParams());
+
+        System.out.println(t_width);
+        onHover();
     }
 
-    //width_height
-    private void by_button_width_height() {
-        button = findViewById(R.id.image_button);
-        button.post(new Runnable() {
-            @Override
-            public void run() {
-                //height
-                for (int i = 0; i < id_list.length; i++) {
-                    button = findViewById(id_list[i]);
-                    button.getLayoutParams().height = button.getWidth();
-                    button.setLayoutParams(button.getLayoutParams());
-                }
-            }
-        });
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -687,9 +716,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1) {
-//            ResultVideo();
         } else {
-//            ResultImg();
         }
     }
 }
