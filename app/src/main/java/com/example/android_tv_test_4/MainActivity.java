@@ -716,7 +716,9 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1) {
-        } else {
+        } else if (requestCode == 2) {
+        } else if (requestCode == 3) {
+            System.out.println("从网页页面来");
         }
     }
 }
