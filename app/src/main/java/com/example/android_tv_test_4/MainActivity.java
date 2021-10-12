@@ -607,12 +607,15 @@ public class MainActivity extends AppCompatActivity {
             button.getLayoutParams().width = t_width;
             button.setLayoutParams(button.getLayoutParams());
             //显示
-            button.setVisibility(View.VISIBLE);
+//            button.setVisibility(View.VISIBLE);
         }
     }
 
     //图标和背景图
     private void newIcon() {
+        //隐藏控件
+        LinearLayout layout1 = findViewById(R.id.main_demo_layout);
+        layout1.setVisibility(View.GONE);
         //背景大图
         String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/icons/10.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(path);
@@ -630,10 +633,6 @@ public class MainActivity extends AppCompatActivity {
             //展示图片
             button.setVisibility(View.VISIBLE);
         }
-//        button = findViewById(id_list[0]);
-//        Bitmap bitmap1 = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/icons/" + iconList[0]);
-//        Drawable drawable1 = new BitmapDrawable(bitmap1);
-//        button.setBackground(drawable1);
     }
 
     private void onClick() {
@@ -696,7 +695,7 @@ public class MainActivity extends AppCompatActivity {
                         button.getLayoutParams().width = t_width;
                         button.setLayoutParams(button.getLayoutParams());
                         //显示
-                        button.setVisibility(View.VISIBLE);
+//                        button.setVisibility(View.VISIBLE);
                     }
                     if (b) {
                         button = findViewById(view.getId());
@@ -712,40 +711,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        //隐藏
-//        ImageView imageView = findViewById(R.id.image_main);
-//        imageView.setVisibility(View.GONE);
-        super.onWindowFocusChanged(hasFocus);
-        //赋值
-//        t_width = findViewById(R.id.video_button).getWidth();
-        //重新改变大小
-        //全体初始化
-        //隐藏
-//        ImageView imageView = findViewById(R.id.image_main);
-//        imageView.setVisibility(View.GONE);
-//        for (int j = 0; j < id_list.length; j++) {
-//            button = findViewById(id_list[j]);
-//            button.getLayoutParams().height = t_width;
-//            button.getLayoutParams().width = t_width;
-//            button.setLayoutParams(button.getLayoutParams());
-//            //显示
-//            button.setVisibility(View.VISIBLE);
-//
-//        }
-//        button = findViewById(R.id.video_button);
-//        button.getLayoutParams().height = t_width + 50;
-//        button.getLayoutParams().width = t_width + 50;
-//        button.setLayoutParams(button.getLayoutParams());
-        System.out.println(t_width);
-//        onHover();
-//        for (int i = 0; i < id_list.length; i++) {
-//            button = findViewById(id_list[i]);
-//            button.setVisibility(View.VISIBLE);
-//        }
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
     }
@@ -753,22 +718,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        t_width = findViewById(R.id.video_button).getWidth();
-        //重新改变大小
-        //全体初始化
-        //隐藏
-//        ImageView imageView = findViewById(R.id.image_main);
-//        imageView.setVisibility(View.GONE);
-//        for (int j = 0; j < id_list.length; j++) {
-//            button = findViewById(id_list[j]);
-//            button.getLayoutParams().height = t_width;
-//            button.getLayoutParams().width = t_width;
-//            button.setLayoutParams(button.getLayoutParams());
-//            //显示
-//        }
-//        button = findViewById(R.id.video_button);
-//        button.getLayoutParams().height = t_width + 50;
-//        button.getLayoutParams().width = t_width + 50;
-//        button.setLayoutParams(button.getLayoutParams());
     }
 }
