@@ -520,6 +520,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.android_tv_test_4.util.PermissionUtils;
@@ -540,9 +541,11 @@ public class MainActivity extends AppCompatActivity {
     private final int[] id_list = new int[]{R.id.video_button, R.id.image_button, R.id.html_button, R.id.exit_button};
     private Intent intent = getIntent();
     //width
-    private int t_width = 0;
+    private int t_width = 128;
     //切换按钮次数
     private int num = 0;
+    //权限变量
+    private boolean root = true;
 
     //权限方法重写
     @Override
@@ -568,6 +571,12 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //隐藏图标
+        for (int i = 0; i < id_list.length; i++) {
+            button = findViewById(id_list[i]);
+            button.setVisibility(View.INVISIBLE);
+        }
+
         //权限调用
         if (PermissionUtils.isGrantExternalRW(MainActivity.this, 1)) {
             newIcon();
@@ -576,44 +585,55 @@ public class MainActivity extends AppCompatActivity {
 //        onHover();
         //读取目录查看文件
         //创建File对象 路径
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/html");
-        //获取该目录下的所有文件
-        String[] files = file.list();
-        button = findViewById(R.id.html_button);
-        //
+//        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/html");
+//        //获取该目录下的所有文件
+//        String[] files = file.list();
+//        button = findViewById(R.id.html_button);
+//        //
 //        button.setVisibility(View.GONE);
-        //长度定义
-        if (files.length != 0) {
-            //有文件显示图标
+//        //长度定义
+//        if (files.length != 0) {
+//            //有文件显示图标
+//            button.setVisibility(View.VISIBLE);
+//        } else {
+//            //隐藏图标
+//            button.setVisibility(View.GONE);
+//        }
+
+        onHover();
+        for (int j = 0; j < id_list.length; j++) {
+            button = findViewById(id_list[j]);
+            button.getLayoutParams().height = t_width;
+            button.getLayoutParams().width = t_width;
+            button.setLayoutParams(button.getLayoutParams());
+            //显示
             button.setVisibility(View.VISIBLE);
-        } else {
-            //隐藏图标
-            button.setVisibility(View.GONE);
         }
     }
 
     //图标和背景图
     private void newIcon() {
         //背景大图
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/icons/10.png";
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/icons/10.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(path);
         LinearLayout layout = findViewById(R.id.main_layout);
         Drawable drawable = new BitmapDrawable(bitmap);
         layout.setBackground(drawable);
 
-        String iconList[] = {"1.png", "2.png", "3.png", "4.png", "10.png"};
+        String iconList[] = {"1.png", "2.png", "3.png", "4.png"};
 
         for (int i = 0; i < id_list.length; i++) {
             button = findViewById(id_list[i]);
             Bitmap bitmap1 = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/icons/" + iconList[i]);
             Drawable drawable1 = new BitmapDrawable(bitmap1);
             button.setBackground(drawable1);
+            //展示图片
+            button.setVisibility(View.VISIBLE);
         }
 //        button = findViewById(id_list[0]);
 //        Bitmap bitmap1 = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath() + "/z_g_r_b/icons/" + iconList[0]);
 //        Drawable drawable1 = new BitmapDrawable(bitmap1);
 //        button.setBackground(drawable1);
-
     }
 
     private void onClick() {
@@ -634,7 +654,6 @@ public class MainActivity extends AppCompatActivity {
                             startActivityForResult(intent, 2);
                             break;
                         case R.id.exit_button:
-//                            finish();
                             System.exit(0);
                             break;
                         case R.id.html_button:
@@ -660,6 +679,10 @@ public class MainActivity extends AppCompatActivity {
 
     //hover
     private void onHover() {
+        //显示
+//        LinearLayout layout = findViewById(R.id.main_show_layout);
+//        layout.setVisibility(View.VISIBLE);
+
         for (int i = 0; i < id_list.length; i++) {
             button = findViewById(id_list[i]);
             button.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -672,6 +695,8 @@ public class MainActivity extends AppCompatActivity {
                         button.getLayoutParams().height = t_width;
                         button.getLayoutParams().width = t_width;
                         button.setLayoutParams(button.getLayoutParams());
+                        //显示
+                        button.setVisibility(View.VISIBLE);
                     }
                     if (b) {
                         button = findViewById(view.getId());
@@ -682,28 +707,42 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+//        ImageView imageView = findViewById(R.id.image_main);
+//        imageView.setVisibility(View.GONE);
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
+        //隐藏
+//        ImageView imageView = findViewById(R.id.image_main);
+//        imageView.setVisibility(View.GONE);
         super.onWindowFocusChanged(hasFocus);
         //赋值
-        t_width = findViewById(R.id.video_button).getWidth();
+//        t_width = findViewById(R.id.video_button).getWidth();
         //重新改变大小
         //全体初始化
-        for (int j = 0; j < id_list.length; j++) {
-            button = findViewById(id_list[j]);
-            button.getLayoutParams().height = t_width;
-            button.getLayoutParams().width = t_width;
-            button.setLayoutParams(button.getLayoutParams());
-        }
-        button = findViewById(R.id.video_button);
-        button.getLayoutParams().height = t_width + 50;
-        button.getLayoutParams().width = t_width + 50;
-        button.setLayoutParams(button.getLayoutParams());
-
+        //隐藏
+//        ImageView imageView = findViewById(R.id.image_main);
+//        imageView.setVisibility(View.GONE);
+//        for (int j = 0; j < id_list.length; j++) {
+//            button = findViewById(id_list[j]);
+//            button.getLayoutParams().height = t_width;
+//            button.getLayoutParams().width = t_width;
+//            button.setLayoutParams(button.getLayoutParams());
+//            //显示
+//            button.setVisibility(View.VISIBLE);
+//
+//        }
+//        button = findViewById(R.id.video_button);
+//        button.getLayoutParams().height = t_width + 50;
+//        button.getLayoutParams().width = t_width + 50;
+//        button.setLayoutParams(button.getLayoutParams());
         System.out.println(t_width);
-        onHover();
+//        onHover();
+//        for (int i = 0; i < id_list.length; i++) {
+//            button = findViewById(id_list[i]);
+//            button.setVisibility(View.VISIBLE);
+//        }
     }
 
     @Override
@@ -714,11 +753,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
-        } else if (requestCode == 2) {
-        } else if (requestCode == 3) {
-            System.out.println("从网页页面来");
-        }
+//        t_width = findViewById(R.id.video_button).getWidth();
+        //重新改变大小
+        //全体初始化
+        //隐藏
+//        ImageView imageView = findViewById(R.id.image_main);
+//        imageView.setVisibility(View.GONE);
+//        for (int j = 0; j < id_list.length; j++) {
+//            button = findViewById(id_list[j]);
+//            button.getLayoutParams().height = t_width;
+//            button.getLayoutParams().width = t_width;
+//            button.setLayoutParams(button.getLayoutParams());
+//            //显示
+//        }
+//        button = findViewById(R.id.video_button);
+//        button.getLayoutParams().height = t_width + 50;
+//        button.getLayoutParams().width = t_width + 50;
+//        button.setLayoutParams(button.getLayoutParams());
     }
 }

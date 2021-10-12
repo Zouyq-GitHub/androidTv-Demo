@@ -5,92 +5,77 @@
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/main_background"
         android:orientation="horizontal"
         tools:context=".MainActivity"
         tools:deviceIds="tv"
+        android:background="@drawable/background"
         tools:ignore="MergeRootFrame">
 
-    <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
 
-    <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3">
 
-        <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
-            <!--            <LinearLayout-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content">-->
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3">
 
-            <!--                <ImageView-->
-            <!--                        android:layout_width="wrap_content"-->
-            <!--                        android:layout_height="wrap_content"-->
-            <!--                        android:src="@drawable/background" />-->
-            <!--            </LinearLayout>-->
-
-            <LinearLayout
+            <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="40dp"
-                    android:padding="40dp">
+                    android:layout_height="match_parent">
 
-                <Button
-                        android:id="@+id/video_button"
-                        android:layout_width="0dp"
+
+                <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="80dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/video" />
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="40dp"
+                        android:padding="40dp">
 
-                <!--                <LinearLayout-->
-                <!--                        android:layout_width="0dp"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:layout_weight="0.8" />-->
+                    <Button
+                            android:id="@+id/video_button"
+                            android:layout_width="0dp"
+                            android:layout_height="80dp"
+                            android:layout_marginRight="80dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/video" />
 
-                <Button
-                        android:id="@+id/image_button"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="80dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/images" />
 
-                <!--                <LinearLayout-->
-                <!--                        android:layout_width="0dp"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:layout_weight="0.8" />-->
+                    <Button
+                            android:id="@+id/image_button"
+                            android:layout_width="0dp"
+                            android:layout_height="80dp"
+                            android:layout_marginRight="80dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/images" />
 
-                <Button
-                        android:id="@+id/html_button"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="80dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/html" />
 
-                <Button
-                        android:id="@+id/exit_button"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/exit" />
-            </LinearLayout>
+                    <Button
+                            android:id="@+id/html_button"
+                            android:layout_width="0dp"
+                            android:layout_height="80dp"
+                            android:layout_marginRight="80dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/html" />
 
-        </RelativeLayout>
-    </LinearLayout>
+                    <Button
+                            android:id="@+id/exit_button"
+                            android:layout_width="0dp"
+                            android:layout_height="80dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/exit" />
+                </LinearLayout>
 
-    <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 </LinearLayout><!--<?xml version="1.0" encoding="utf-8"?>-->
         <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
         <!--        xmlns:app="http://schemas.android.com/apk/res-auto"-->
